@@ -8,20 +8,20 @@ today = datetime.date.today()
 yesterday = today - datetime.timedelta(days=1)
 
 #今日のHTMLファイルの読み込み
-today_file = 'C:\\Users\YUSUKE\Downloads\{}.html'.format(str(today))
+today_file = 'src/{}.html'.format(str(today))
 with open(today_file, 'r') as today_f:
-    t = today_f.readlines()
+    today = today_f.readlines()
 
 #昨日のHTMLファイルの読み込み
-yesterday_file = 'C:\\Users\YUSUKE\Downloads\{}.html'.format(str(yesterday))
+yesterday_file = 'src/{}.html'.format(str(yesterday))
 with open (yesterday_file,'r') as yesterday_f:
-    y = yesterday_f.readlines()
+    yesterday = yesterday_f.readlines()
 
 #HTMLファイルの差分の解析
 result = difflib.Differ().compare(t, y)
 diff = list(result)
 
-#HTMLファイルの差分のみを取得
+#HTMLファイルの差分のみを出力
 for i in diff:
     if "+" or "-"in i:
         print(i)
