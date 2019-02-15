@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import datetime
 import codecs
 import difflib
-from pprint import pprint
+
 
 def get_html(url):
     # URLからHTTPレスポンスを取得
@@ -17,14 +17,16 @@ def save_as_file(html):
     file_name = 'src/{}.html'.format(str(today))
     #ファイルをつくる
     with codecs.open(file_name,"ab",'cp932', 'ignore') as f:
-        f.write(html)
+        f.write(str(html))
 
-def print_diff(today_html, yesterday_html):
+def print_diff(yesterday_html, today_html):
     #HTMLファイルの差分の解析
-    result = difflib.Differ().compare(today_html, yesterday_html)
+    result = difflib.ndiff(yesterday_html, today_html)
     #HTMLファイルの差分のみを出力
     for i in list(result):
-        if "+" or "-" == i[0]:
+        if ' ' == i[0]:
+            continue
+        elif "+" or "-" == i[0]:
             print(i)
 
 def main():
@@ -38,15 +40,15 @@ def main():
 
     #今日のHTMLファイルの読み込み
     today_file = 'src/{}.html'.format(str(today))
-    with open(today_file, 'r', encoding='shift-jis') as today_f:
+    with open(today_file, 'r', encoding='cp932') as today_f:
         today_html = today_f.readlines()
     
     #昨日のHTMLファイルの読み込み
     yesterday_file = 'src/{}.html'.format(str(yesterday))
-    with open (yesterday_file,'r', encoding='shift-jis') as yesterday_f:
+    with open (yesterday_file,'r', encoding='utf-8') as yesterday_f:
         yesterday_html = yesterday_f.readlines()
 
-    print_diff(today_html, yesterday_html)
+    print_diff(yesterday_html, today_html)
 
 
 if __name__ == '__main__':
