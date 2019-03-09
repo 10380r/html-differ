@@ -16,7 +16,7 @@ def save_as_file(html):
     #ファイル名の指定
     file_name = 'src/{}.html'.format(str(today))
     #ファイルをつくる
-    with codecs.open(file_name,"ab",'cp932', 'ignore') as f:
+    with codecs.open(file_name,"wb",'cp932', 'ignore') as f:
         f.write(str(html))
 
 def print_diff(yesterday_html, today_html):
